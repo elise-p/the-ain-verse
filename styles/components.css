@@ -1,41 +1,39 @@
-/* Header Controls Grouping (if you have a div wrapping social links and theme toggle) */
+/* Header Controls Grouping */
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 15px; /* Space between social links and theme toggle */
+  gap: 15px;
 }
 
 #theme-toggle {
   background: transparent;
-  border: 1px solid var(--card-border-color); /* Subtle border */
+  border: 1px solid var(--card-border-color);
   color: var(--text-color);
-  cursor: pointer;
-  width: 44px; /* Explicit width */
-  height: 44px; /* Explicit height */
+  padding: 0;
+  font-size: 1.4em;
   border-radius: 50%;
-  padding: 0; /* Remove padding if using width/height for sizing */
-  font-size: 1.4em; /* Increase icon size */
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1; /* Ensure icon is centered if it's text-based */
+  line-height: 1;
   transition: background-color 0.3s ease, color 0.3s ease,
     border-color 0.3s ease, transform 0.2s ease;
 }
 
 #theme-toggle:focus-visible {
   outline: 2px solid var(--focus-outline-color);
-  outline-offset: 3px; /* Slightly more offset for circular button */
+  outline-offset: 3px;
 }
 
 #theme-toggle:hover,
 #theme-toggle:focus {
-  background-color: var(
-    --topic-bg-color
-  ); /* Use topic background for subtle hover */
-  color: var(--link-hover-color); /* Change icon color on hover */
+  background-color: var(--topic-bg-color);
+  color: var(--link-hover-color);
   border-color: var(--button-hover-border-color);
-  transform: translateY(-1px) scale(1.05); /* Slight lift and scale */
+  transform: translateY(-1px) scale(1.05);
 }
 
 /* Intro Section Styles */
@@ -58,10 +56,9 @@
 }
 
 .intro em {
-  /* Style emphasized text */
   color: var(--accent-color);
   font-style: italic;
-  font-weight: 600; /* Make it a bit bolder */
+  font-weight: 600;
 }
 
 /* Specific styling for the cat-call element within the intro */
@@ -75,14 +72,12 @@
   padding: 0.2em 0.4em;
   border-radius: var(--border-radius-small);
   box-shadow: var(--card-shadow);
-  transition: color 0.3s ease, font-weight 0.3s ease, text-transform 0.3s ease,
-    box-shadow 0.3s ease, transform 0.2s ease;
-  /* background-color: var(--topic-bg-color); /* Removed by user */
+  transition: color 0.3s ease, font-weight 0.3s ease, text-transform 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .intro em#cat-call:hover,
 .intro em#cat-call:focus {
-  color: var(--cat-mood-alert-color); /* Example: alert color on hover/focus */
+  color: var(--cat-mood-alert-color);
   box-shadow: var(--card-shadow-hover);
   transform: translateY(-2px);
 }
@@ -112,9 +107,10 @@
 
 .intro em#cat-call.cat-call--idle {
   color: var(--cat-mood-idle-color);
-  font-weight: normal; /* Or your default em font-weight */
+  font-weight: normal;
   text-transform: none;
 }
+
 
 #status {
   text-align: center;
@@ -136,10 +132,10 @@
   background-color: var(--card-bg-color);
   border: 1px solid var(--card-border-color);
   border-radius: var(--border-radius-default);
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   box-shadow: var(--card-shadow);
   transition: background-color 0.3s ease, border-color 0.3s ease,
-    box-shadow 0.3s ease, transform 0.3s ease; /* Added transform for preview */
+    box-shadow 0.3s ease, transform 0.3s ease;
   position: relative;
   padding-top: 40px; /* space for actions */
 }
@@ -154,7 +150,6 @@
 }
 
 .repo-card:hover:not(.repo-card--preview-active) {
-  /* Only apply general hover if not in preview mode */
   box-shadow: var(--card-shadow-hover);
 }
 
@@ -232,7 +227,7 @@
 
 .repo-action-icon {
   display: inline-block;
-  font-size: 1.3em; /* Adjust icon size */
+  font-size: 1.3em;
   color: var(--link-color);
   text-decoration: none;
   padding: 4px;
@@ -275,19 +270,6 @@
   outline-offset: 2px;
 }
 
-/* Styles for interactive card previews */
-.repo-card--has-pages-preview {
-  cursor: pointer;
-}
-
-.repo-card--has-pages-preview.repo-card--hover-pop:not(
-    .repo-card--preview-active
-  ) {
-  transform: scale(1.03);
-  z-index: 50;
-  box-shadow: var(--card-shadow-hover);
-}
-
 /* Styles for the card when its preview modal is active */
 .repo-card--preview-active {
   transform: scale(1.05) !important;
@@ -299,8 +281,7 @@
 
 /* Styles for GitHub Pages Preview Modal */
 .pages-preview-modal-overlay {
-  position: relative;
-  position: absolute;
+  position: fixed; /* Changed from relative to fixed */
   top: 0;
   left: 0;
   width: 100%;
@@ -322,15 +303,15 @@ body.modal-open .pages-preview-modal-overlay {
 }
 
 .pages-preview-modal-content {
-  background-color: var(--bg-color); /* Use a base background, iframe will cover most */
-  width: 90%; /* Take up most of the viewport width */
-  height: 90%; /* Take up most of the viewport height */
-  max-width: 1400px; /* Optional: max width for very large screens */
+  background-color: var(--bg-color);
+  width: 90%;
+  height: 90%;
+  max-width: 1400px;
   border-radius: var(--border-radius-default);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  position: relative; /* For positioning the close button */
-  display: flex; /* To make iframe fill the space */
-  flex-direction: column; /* Stack close button and iframe */
+  position: relative;
+  display: flex;
+  flex-direction: column;
   transform: scale(0.95);
   transition: transform 0.3s ease-out;
 }
@@ -340,18 +321,18 @@ body.modal-open .pages-preview-modal-content {
 }
 
 .pages-preview-modal-content .pages-iframe {
-  flex-grow: 1; /* Iframe takes all available space */
+  flex-grow: 1;
   width: 100%;
-  height: 100%; /* Should be controlled by flex-grow */
+  height: 100%;
   border: none;
-  border-radius: var(--border-radius-default); /* Match modal content rounding */
+  border-radius: var(--border-radius-default);
 }
 
 .pages-preview-close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(var(--card-bg-color-rgb, 40, 40, 40), 0.7); /* Use RGB var for theme adaptability */
+  background-color: rgba(var(--card-bg-color-rgb, 40, 40, 40), 0.7);
   backdrop-filter: blur(3px);
   color: var(--text-color);
   border: 1px solid var(--card-border-color);
@@ -365,14 +346,10 @@ body.modal-open .pages-preview-modal-content {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2010; /* Above iframe */
+  z-index: 2010;
   box-shadow: 0 1px 4px rgba(0,0,0,0.25);
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
-
-/* Define --card-bg-color-rgb in variables.css if not already present */
-/* :root { --card-bg-color-rgb: 255, 255, 255; } */
-/* body.dark-theme { --card-bg-color-rgb: 35, 39, 47; } */
 
 .pages-preview-close-btn:hover,
 .pages-preview-close-btn:focus {
@@ -384,6 +361,40 @@ body.modal-open .pages-preview-modal-content {
   outline: 2px solid var(--focus-outline-color);
   outline-offset: 1px;
 }
+
+/* Original styles for card preview interaction, can be simplified if only for modal trigger */
+.repo-card--has-pages-preview {
+  cursor: pointer;
+}
+
+.repo-card--has-pages-preview.repo-card--hover-pop:not(.repo-card--preview-active) {
+  transform: scale(1.03);
+  z-index: 50;
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Stop Animation Button */
+.stop-weather-animation-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: var(--border-radius-small);
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    z-index: 2005; /* Above animations, below modal if any */
+    transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0.9;
+}
+
+.stop-weather-animation-btn:hover {
+    background-color: var(--button-hover-bg-color);
+    opacity: 1;
+}
+
 
 @media (max-width: 767px) {
   .repo-container {

@@ -122,25 +122,24 @@ function togglePagesPreview(event) {
 
   if (!pagesUrl) return;
 
-  const existingIframeContainer = repoCard.querySelector(".pages-iframe-container");
-
   // For modal, we don't hide elements within the card itself.
   // The card might get an 'active' class for styling, but its content remains.
 
-  if (existingIframeContainer) {
-    // This logic was for in-card iframe, now we handle modal.
-    // The modal removal will be handled by its own close function.
-    // We just need to ensure the card's active state is reset if the modal is closed externally.
-  } else {
-    // Close any other active preview
-    const currentlyActive = document.querySelector('.repo-card--preview-active');
-    if (currentlyActive && currentlyActive !== repoCard) {
-        togglePagesPreview({ currentTarget: currentlyActive, target: currentlyActive }); // Simulate event to close it
+  // Close any other active preview modal first
+  const existingModal = document.getElementById("pages-preview-modal");
+  if (existingModal) {
+    // If the click is on the same card that already has an open modal,
+    // this call effectively closes it.
+    // If it's a different card, the existing modal is closed before opening a new one.
+    closePagesPreviewModal();
+    if (repoCard.classList.contains('repo-card--preview-active')) {
+        // If we just closed the modal for this card, don't reopen it immediately
+        return;
     }
-
-    repoCard.classList.add("repo-card--preview-active");
-    showPagesPreviewModal(pagesUrl, repoCard.querySelector('h3 a').textContent, repoCard);
   }
+  
+  repoCard.classList.add("repo-card--preview-active");
+  showPagesPreviewModal(pagesUrl, repoCard.querySelector('h3 a').textContent, repoCard);
 }
 
 function closePagesPreviewModal() {
@@ -156,19 +155,19 @@ function closePagesPreviewModal() {
 }
 
 function showPagesPreviewModal(pagesUrl, repoName, originatingCard) {
-  closePagesPreviewModal(); // Close any existing modal
+  closePagesPreviewModal(); // Ensure no other modal is open
 
   const modalOverlay = document.createElement("div");
   modalOverlay.id = "pages-preview-modal";
-  modalOverlay.className = "modal-overlay pages-preview-modal-overlay"; // Added specific class
+  modalOverlay.className = "modal-overlay pages-preview-modal-overlay";
   modalOverlay.onclick = (e) => {
-    if (e.target === modalOverlay) { // Close only if overlay itself is clicked
+    if (e.target === modalOverlay) {
       closePagesPreviewModal();
     }
   };
 
   const modalContent = document.createElement("div");
-  modalContent.className = "modal-content pages-preview-modal-content"; // Added specific class
+  modalContent.className = "modal-content pages-preview-modal-content";
 
     const iframe = document.createElement("iframe");
     iframe.className = "pages-iframe";
@@ -178,7 +177,7 @@ function showPagesPreviewModal(pagesUrl, repoName, originatingCard) {
     iframe.setAttribute('loading', 'lazy');
 
     const closeButton = document.createElement("button");
-    closeButton.className = "modal-close-btn pages-preview-close-btn"; // Added specific class
+    closeButton.className = "modal-close-btn pages-preview-close-btn";
     closeButton.innerHTML = "&times;";
     closeButton.setAttribute("aria-label", "Close preview");
     closeButton.onclick = (e) => {
@@ -194,22 +193,17 @@ function showPagesPreviewModal(pagesUrl, repoName, originatingCard) {
   document.body.classList.add("modal-open");
   closeButton.focus();
 
-  // Ensure the originating card has the active class
   if (originatingCard) originatingCard.classList.add('repo-card--preview-active');
 }
 
 export function setupInteractiveCardListeners() {
-  // Use event delegation on repoListDiv for dynamically added cards
-  // and to handle clicks more efficiently.
   repoListDiv.addEventListener('click', function(event) {
     const card = event.target.closest('.repo-card--has-pages-preview');
     if (card) {
-      // Pass the original event target to togglePagesPreview to check for icon clicks
       togglePagesPreview({ currentTarget: card, target: event.target });
     }
   });
 
-  // Add hover effects if desired (can also be pure CSS)
   repoListDiv.addEventListener('mouseover', function(event) {
     const card = event.target.closest('.repo-card--has-pages-preview');
     if (card && !card.classList.contains('repo-card--preview-active')) {
