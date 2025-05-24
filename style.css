@@ -1,0 +1,302 @@
+:root {
+  /* Vibrant & Clean Light Theme */
+  --bg-color: #F8F9FA;                     /* Very light gray, almost white */
+  --bg-color-alt: #FFFFFF;                  /* Pure white for cards/headers */
+  --text-color: #212529;                    /* Dark, near-black for high contrast text */
+  --card-bg-color: var(--bg-color-alt);
+  --card-border-color: #DEE2E6;             /* Light gray border */
+  --link-color: #007BFF;                    /* Bright, standard blue for links */
+  --link-hover-color: #0056b3;              /* Darker blue for hover */
+  --button-bg-color: var(--link-color);
+  --button-text-color: #FFFFFF;             /* White text on blue buttons */
+  --button-hover-bg-color: var(--link-hover-color);
+  --topic-bg-color: #E9ECEF;                /* Light gray for topics */
+  --topic-text-color: #495057;              /* Medium-dark gray for topic text */
+  --header-bg-color: var(--bg-color-alt);
+  --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Standard subtle shadow */
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.075);
+  --card-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.1);
+  --focus-outline-color: var(--link-color);
+
+  --border-radius-small: 4px;
+  --border-radius-default: 8px;
+  --border-radius-large: 12px;
+}
+
+body.dark-theme {
+  /* Sophisticated & Modern Dark Theme */
+  --bg-color: #1A1D24;                     /* Deep, cool dark blue/gray */
+  --bg-color-alt: #23272F;                  /* Slightly lighter for cards/headers */
+  --text-color: #E8EAED;                    /* Light, slightly cool gray for text */
+  --card-bg-color: var(--bg-color-alt);
+  --card-border-color: #333A45;             /* Subtle, darker border */
+  --link-color: #4D94FF;                    /* Vibrant blue, good contrast on dark */
+  --link-hover-color: #73ABFF;              /* Lighter blue for hover */
+  --button-bg-color: var(--link-color);
+  --button-text-color: #FFFFFF;             /* White text on blue buttons */
+  --button-hover-bg-color: var(--link-hover-color);
+  --topic-bg-color: #2C313A;                /* Darker gray for topics */
+  --topic-text-color: #A0AEC0;              /* Lighter gray for topic text */
+  --header-bg-color: var(--bg-color-alt);
+  --header-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); /* More defined shadow for dark theme */
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.25);
+  --focus-outline-color: var(--link-color);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+header {
+  background-color: var(--header-bg-color);
+  padding-block: 1rem;
+  padding-inline: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--header-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8em;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+header h1 a:hover,
+header h1 a:focus {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+#theme-toggle {
+  padding-block: 0.5em;
+  padding-inline: 1em;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+#theme-toggle:hover,
+#theme-toggle:focus {
+  background-color: var(--button-hover-bg-color);
+}
+
+#status {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+  color: var(--text-color);
+}
+
+.repo-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.repo-card {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: var(--border-radius-default);
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+    position: relative;
+    padding-top: 40px;
+}
+
+.repo-card-actions{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.repo-card:hover {
+  box-shadow: var(--card-shadow-hover);
+}
+
+.repo-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.4em;
+}
+
+.repo-card h3 a {
+  text-decoration: none;
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+.repo-card h3 a:hover,
+.repo-card h3 a:focus {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+.repo-card h3 a:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.repo-description {
+  font-size: 0.95em;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.repo-gh-pages-link {
+  display: inline-block;
+  margin-bottom: 15px;
+  padding-block: 8px; padding-inline: 12px;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color); /* Removed !important */
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.repo-gh-pages-link:hover,
+.repo-gh-pages-link:focus {
+  background-color: var(--button-hover-bg-color);
+  text-decoration: none;
+}
+
+.repo-gh-pages-link:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.repo-meta {
+  font-size: 0.85em;
+  color: var(--text-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.repo-meta span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.repo-topics {
+  margin-top: 10px;
+  font-size: 0.85em;
+}
+
+.repo-topics strong {
+  color: var(--text-color);
+}
+
+.repo-topic {
+  display: inline-block;
+  background-color: var(--topic-bg-color);
+  color: var(--topic-text-color);
+  padding-block: 4px;
+  padding-inline: 8px;
+  border-radius: var(--border-radius-small);
+  margin-inline-end: 5px;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.repo-topic:hover,
+.repo-topic:focus {
+  background-color: var(--topic-text-color);
+  color: var(--topic-bg-color);
+  text-decoration: none;
+}
+.repo-action-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-inline-end: 10px;
+  padding-block: 6px;
+  padding-inline: 10px; /* Logical properties for padding */
+  background-color: transparent; /* Or a subtle background */
+  color: var(--link-color);
+  border: 1px solid var(--card-border-color); /* Subtle border */
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  font-size: 0.85em;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.repo-action-link:hover,
+.repo-action-link:focus {
+  background-color: var(--topic-bg-color);
+  color: var(--link-hover-color);
+  border-color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+.repo-action-link:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.repo-action-icon {
+  display: inline-block;
+  font-size: 1.3em; /* Adjust icon size */
+  color: var(--link-color);
+  text-decoration: none;
+  padding: 4px; /* Small padding around the icon */
+  border-radius: var(--border-radius-small);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.repo-action-icon:hover,
+.repo-action-icon:focus {
+  color: var(--link-hover-color);
+  background-color: var(--topic-bg-color); 
+}
+
+.repo-action-icon:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 1px;
+}
+
+@media (max-width: 767px) {
+  .repo-container {
+    grid-template-columns: 1fr;
+  }
+}
