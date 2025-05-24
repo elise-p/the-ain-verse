@@ -1,17 +1,17 @@
 :root {
   /* Vibrant & Clean Light Theme */
-  --bg-color: #F8F9FA;                     /* Very light gray, almost white */
-  --bg-color-alt: #FFFFFF;                 /* Pure white for cards/headers */
-  --text-color: #212529;                   /* Dark, near-black for high contrast text */
+  --bg-color: #f8f9fa; /* Very light gray, almost white */
+  --bg-color-alt: #ffffff; /* Pure white for cards/headers */
+  --text-color: #212529; /* Dark, near-black for high contrast text */
   --card-bg-color: var(--bg-color-alt);
-  --card-border-color: #DEE2E6;            /* Light gray border */
-  --link-color: #007BFF;                   /* Bright, standard blue for links */
-  --link-hover-color: #0056b3;             /* Darker blue for hover */
+  --card-border-color: #dee2e6; /* Light gray border */
+  --link-color: #007bff; /* Bright, standard blue for links */
+  --link-hover-color: #0056b3; /* Darker blue for hover */
   --button-bg-color: var(--link-color);
-  --button-text-color: #FFFFFF;            /* White text on blue buttons */
+  --button-text-color: #ffffff; /* White text on blue buttons */
   --button-hover-bg-color: var(--link-hover-color);
-  --topic-bg-color: #E9ECEF;               /* Light gray for topics */
-  --topic-text-color: #495057;             /* Medium-dark gray for topic text */
+  --topic-bg-color: #e9ecef; /* Light gray for topics */
+  --topic-text-color: #495057; /* Medium-dark gray for topic text */
   --header-bg-color: var(--bg-color-alt);
   --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Standard subtle shadow */
   --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.075);
@@ -21,6 +21,16 @@
   --text-secondary-color: #55575a; /* For less prominent text */
   --button-hover-border-color: var(--link-hover-color);
 
+  --cat-mood-angry-color: #d32f2f; /* Strong red */
+  --cat-mood-playful-color: #ff9800; /* Orange/Yellow */
+  --cat-mood-alert-color: #1976d2; /* Blue */
+  --cat-mood-default-color: var(
+    --accent-color
+  ); /* Uses your existing accent color */
+  --cat-mood-idle-color: var(
+    --text-secondary-color
+  ); /* Less prominent for Zzz */
+
   --border-radius-small: 4px;
   --border-radius-default: 8px;
   --border-radius-large: 12px;
@@ -28,18 +38,18 @@
 
 body.dark-theme {
   /* Sophisticated & Modern Dark Theme */
-  --bg-color: #1A1D24;                    /* Deep, cool dark blue/gray */
-  --bg-color-alt: #23272F;                 /* Slightly lighter for cards/headers */
-  --text-color: #E8EAED;                   /* Light, slightly cool gray for text */
+  --bg-color: #1a1d24; /* Deep, cool dark blue/gray */
+  --bg-color-alt: #23272f; /* Slightly lighter for cards/headers */
+  --text-color: #e8eaed; /* Light, slightly cool gray for text */
   --card-bg-color: var(--bg-color-alt);
-  --card-border-color: #333A45;            /* Subtle, darker border */
-  --link-color: #4D94FF;                   /* Vibrant blue, good contrast on dark */
-  --link-hover-color: #73ABFF;             /* Lighter blue for hover */
+  --card-border-color: #333a45; /* Subtle, darker border */
+  --link-color: #4d94ff; /* Vibrant blue, good contrast on dark */
+  --link-hover-color: #73abff; /* Lighter blue for hover */
   --button-bg-color: var(--link-color);
-  --button-text-color: #FFFFFF;            /* White text on blue buttons */
+  --button-text-color: #ffffff; /* White text on blue buttons */
   --button-hover-bg-color: var(--link-hover-color);
-  --topic-bg-color: #2C313A;               /* Darker gray for topics */
-  --topic-text-color: #A0AEC0;             /* Lighter gray for topic text */
+  --topic-bg-color: #2c313a; /* Darker gray for topics */
+  --topic-text-color: #a0aec0; /* Lighter gray for topic text */
   --header-bg-color: var(--bg-color-alt);
   --header-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); /* More defined shadow for dark theme */
   --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -48,6 +58,11 @@ body.dark-theme {
   --accent-color: #4db6ac; /* Lighter teal for dark mode accents */
   --text-secondary-color: #a0a0a0; /* Lighter gray for secondary text in dark mode */
   --button-hover-border-color: var(--link-hover-color);
+  --cat-mood-angry-color: #ef5350; /* Lighter, but still strong, red */
+  --cat-mood-playful-color: #ffa726; /* Lighter orange/yellow */
+  --cat-mood-alert-color: #64b5f6; /* Lighter blue */
+  --cat-mood-default-color: var(--accent-color);
+  --cat-mood-idle-color: var(--text-secondary-color);
 }
 
 body {
@@ -115,7 +130,8 @@ header h1 a:focus {
   align-items: center;
   justify-content: center;
   line-height: 1; /* Ensure icon is centered if it's text-based */
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, transform 0.2s ease;
 }
 
 #theme-toggle:focus-visible {
@@ -125,7 +141,9 @@ header h1 a:focus {
 
 #theme-toggle:hover,
 #theme-toggle:focus {
-  background-color: var(--topic-bg-color); /* Use topic background for subtle hover */
+  background-color: var(
+    --topic-bg-color
+  ); /* Use topic background for subtle hover */
   color: var(--link-hover-color); /* Change icon color on hover */
   border-color: var(--button-hover-border-color);
   transform: translateY(-1px) scale(1.05); /* Slight lift and scale */
@@ -150,7 +168,8 @@ header h1 a:focus {
   margin-bottom: 0;
 }
 
-.intro em { /* Style emphasized text */
+.intro em {
+  /* Style emphasized text */
   color: var(--accent-color);
   font-style: italic;
   font-weight: 600; /* Make it a bit bolder */
@@ -382,12 +401,15 @@ footer p {
   line-height: 1.6;
 }
 
-footer em { /* Style emphasized text in footer too */
+footer em {
+  /* Style emphasized text in footer too */
   color: var(--accent-color);
   font-style: italic;
 }
 
-footer .fas, footer .fab { /* Style Font Awesome icons in footer */
+footer .fas,
+footer .fab {
+  /* Style Font Awesome icons in footer */
   color: var(--accent-color);
   margin-inline: 0.2em; /* Space around icons */
   font-size: 1.05em; /* Slightly larger than surrounding text */
@@ -397,4 +419,39 @@ footer .fas, footer .fab { /* Style Font Awesome icons in footer */
   .repo-container {
     grid-template-columns: 1fr;
   }
+}
+
+em#cat-call {
+  transition: color 0.3s ease, font-weight 0.3s ease, text-transform 0.3s ease;
+  color: var(--cat-mood-default-color);
+  font-weight: 600; /* Make it bold */
+  text-transform: uppercase; /* Make it uppercase */
+  font-size: 1.2em; /* Slightly larger for emphasis */
+  cursor: pointer;
+  display: inline-block; /* Ensure it behaves like a button */
+  padding: 0.2em 0.4em; /* Add some padding for better click area */
+  border-radius: var(--border-radius-small);
+  background-color: var(--topic-bg-color); /* Subtle background */
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+em#cat-call:hover,
+em#cat-call:focus {
+  color: var(--cat-mood-alert-color);
+  background-color: var(--topic-text-color); /* Change background on hover */
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px); /* Slight lift effect */
+}
+em#cat-call:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+em#cat-call:active {
+  transform: translateY(0); /* Reset lift effect on click */
+  box-shadow: var(--card-shadow); /* Reset shadow on click */
+}
+em#cat-call:hover {
+  text-decoration: none; /* Remove underline on hover */
 }
