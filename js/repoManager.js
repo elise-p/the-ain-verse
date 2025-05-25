@@ -1,6 +1,9 @@
 import { GITHUB_USERNAME, API_URL, GITHUB_API_ACCEPT_HEADER } from './config.js';
 import { statusDiv, repoListDiv } from './domElements.js';
 
+let allFetchedRepos = []; // Cache for all fetched repositories
+let currentSearchTerm = ""; // Stores the current search term
+
 function getGhPagesUrl(repoData) {
   if (repoData.homepage && typeof repoData.homepage === 'string' && repoData.homepage.trim() !== "" && (repoData.homepage.startsWith("http://") || repoData.homepage.startsWith("https://"))) {
     return repoData.homepage;
@@ -102,44 +105,31 @@ function createRepoCardElement(repo) {
   return repoCard;
 }
 
-function displayRepos(repos) {
-  repoListDiv.innerHTML = ""; // Clear previous before appending new
+// Renders the provided list of repositories to the DOM and updates status.
+function renderReposToDOM(reposToDisplay) {
+  repoListDiv.innerHTML = ""; // Clear previous list
+
+  if (reposToDisplay.length === 0) {
+    if (currentSearchTerm) {
+      statusDiv.textContent = `🤷 No repositories found matching "${currentSearchTerm}".`;
+    } else if (allFetchedRepos.length === 0 && !statusDiv.textContent.startsWith("❌ Error")) {
+      // This case is when initial fetch yielded no repos (not an error state)
+      // statusDiv should already be set by fetchInitialRepos, e.g., "🤷 No public repositories found."
+      // If statusDiv is empty here, it means fetchInitialRepos found repos, but then allFetchedRepos was cleared somehow.
+      // For safety, if allFetchedRepos is empty and no search term, and no error, set a generic message.
+      if (!statusDiv.textContent) statusDiv.textContent = "🤷 No repositories found.";
+    }
+    // If there's an error message, it should persist.
+  } else {
+    statusDiv.textContent = ""; // Clear status message if repos are displayed
+  }
+
   const fragment = document.createDocumentFragment();
-  repos.forEach((repo) => {
+  reposToDisplay.forEach((repo) => {
     const repoCard = createRepoCardElement(repo);
     fragment.appendChild(repoCard);
   });
   repoListDiv.appendChild(fragment);
-}
-
-function togglePagesPreview(event) {
-  const repoCard = event.currentTarget;
-  // Ensure we don't trigger preview if an action icon within the card was clicked
-  if (event.target.closest('.repo-action-icon')) {
-    return;
-  }
-  const pagesUrl = repoCard.dataset.pagesUrl;
-
-  if (!pagesUrl) return;
-
-  // For modal, we don't hide elements within the card itself.
-  // The card might get an 'active' class for styling, but its content remains.
-
-  // Close any other active preview modal first
-  const existingModal = document.getElementById("pages-preview-modal");
-  if (existingModal) {
-    // If the click is on the same card that already has an open modal,
-    // this call effectively closes it.
-    // If it's a different card, the existing modal is closed before opening a new one.
-    closePagesPreviewModal();
-    if (repoCard.classList.contains('repo-card--preview-active')) {
-        // If we just closed the modal for this card, don't reopen it immediately
-        return;
-    }
-  }
-  
-  repoCard.classList.add("repo-card--preview-active");
-  showPagesPreviewModal(pagesUrl, repoCard.querySelector('h3 a').textContent, repoCard);
 }
 
 function closePagesPreviewModal() {
@@ -153,6 +143,32 @@ function closePagesPreviewModal() {
     });
   }
 }
+
+function togglePagesPreview(event) {
+  const repoCard = event.currentTarget;
+  // Ensure we don't trigger preview if an action icon within the card was clicked
+  if (event.target.closest('.repo-action-icon')) {
+    return;
+  }
+  const pagesUrl = repoCard.dataset.pagesUrl;
+
+  if (!pagesUrl) return;
+
+  // Close any other active preview modal first
+  const existingModal = document.getElementById("pages-preview-modal");
+  if (existingModal) {
+    const isActiveForThisCard = repoCard.classList.contains('repo-card--preview-active');
+    closePagesPreviewModal(); // This will remove active class from all cards
+    if (isActiveForThisCard) {
+        // If we just closed the modal for this card, don't reopen it immediately
+        return;
+    }
+  }
+  
+  // repoCard.classList.add("repo-card--preview-active"); // Will be added by showPagesPreviewModal
+  showPagesPreviewModal(pagesUrl, repoCard.querySelector('h3 a').textContent, repoCard);
+}
+
 
 function showPagesPreviewModal(pagesUrl, repoName, originatingCard) {
   closePagesPreviewModal(); // Ensure no other modal is open
@@ -218,10 +234,32 @@ export function setupInteractiveCardListeners() {
   });
 }
 
-export async function fetchAndDisplayRepos() {
+// Filters `allFetchedRepos` based on `currentSearchTerm` and renders them.
+export function filterAndRenderRepos() {
+  let reposToDisplay = allFetchedRepos;
+
+  if (currentSearchTerm) {
+    reposToDisplay = allFetchedRepos.filter(repo => {
+      const nameMatch = repo.name.toLowerCase().includes(currentSearchTerm);
+      const descriptionMatch = repo.description && repo.description.toLowerCase().includes(currentSearchTerm);
+      const topicsMatch = repo.topics && repo.topics.some(topic => topic.toLowerCase().includes(currentSearchTerm));
+      return nameMatch || descriptionMatch || topicsMatch;
+    });
+  }
+  renderReposToDOM(reposToDisplay);
+}
+
+// Called by the search input event listener in script.js
+export function handleSearch(searchTerm) {
+  currentSearchTerm = searchTerm.toLowerCase().trim();
+  filterAndRenderRepos();
+}
+
+// Fetches repositories from GitHub, caches them, and then renders them.
+export async function fetchInitialRepos() {
   statusDiv.textContent = "🔄 Loading projects...";
-  statusDiv.style.color = "";
-  repoListDiv.innerHTML = "";
+  statusDiv.style.color = ""; // Reset color
+  repoListDiv.innerHTML = ""; // Clear list while loading
 
   try {
     const response = await fetch(API_URL, { headers: { Accept: GITHUB_API_ACCEPT_HEADER } });
@@ -229,23 +267,32 @@ export async function fetchAndDisplayRepos() {
       const errorData = await response.json().catch(() => ({ message: response.statusText }));
       throw new Error(`GitHub API Error: ${response.status} - ${errorData.message || "Unknown error"}`);
     }
-    const repos = await response.json();
-    if (!Array.isArray(repos) || repos.length === 0) {
-      statusDiv.textContent = "🤷 No public repositories found.";
-      return;
+    allFetchedRepos = await response.json();
+
+    if (!Array.isArray(allFetchedRepos)) { // Should not happen with GitHub API
+        allFetchedRepos = []; // Ensure it's an array
+        throw new Error("Received unexpected data format from API.");
     }
-    displayRepos(repos);
-    statusDiv.textContent = "";
+
+    if (allFetchedRepos.length === 0) {
+      statusDiv.textContent = "🤷 No public repositories found.";
+      // repoListDiv is already clear
+    } else {
+      statusDiv.textContent = ""; // Clear loading message
+    }
+    filterAndRenderRepos(); // Display all fetched repos (or based on any pre-existing search term if app re-init)
   } catch (error) {
     console.error("Error fetching repositories:", error);
+    allFetchedRepos = []; // Clear cache on error
+    repoListDiv.innerHTML = ""; // Ensure list is clear
     let errorMessage = `❌ Error: ${error.message}.`;
     if (error.message.includes("403")) errorMessage += " This might be due to API rate limiting. Please try again later.";
     errorMessage += " Check console for more details.";
-    statusDiv.innerHTML = `${errorMessage} <button id="retry-fetch">Retry</button>`;
+    statusDiv.innerHTML = `${errorMessage} <button id="retry-fetch-button">Retry</button>`;
     statusDiv.style.color = "red";
-    const retryButton = document.getElementById("retry-fetch");
+    const retryButton = document.getElementById("retry-fetch-button");
     if (retryButton) {
-        retryButton.addEventListener("click", fetchAndDisplayRepos);
+        retryButton.onclick = fetchInitialRepos; // Re-run this function on click
     }
   }
 }

@@ -1,6 +1,6 @@
-import { performPreFlightChecks } from './js/domElements.js';
+import { performPreFlightChecks, repoSearchInput } from './js/domElements.js';
 import { loadInitialTheme } from './js/themeManager.js';
-import { fetchAndDisplayRepos, setupInteractiveCardListeners } from './js/repoManager.js';
+import { fetchInitialRepos, handleSearch, setupInteractiveCardListeners } from './js/repoManager.js';
 import { initializeCatSound } from './js/catSoundManager.js';
 
 async function initializeApp() {
@@ -11,9 +11,16 @@ async function initializeApp() {
 
   // --- INITIALIZE ---
   loadInitialTheme();
-  await fetchAndDisplayRepos(); // Wait for repos to be fetched and displayed
+  await fetchInitialRepos(); // Fetch and display initial set of repos
   setupInteractiveCardListeners(); // Setup listeners after repos are on the page
   initializeCatSound(); // Cat sound can be initialized after other UI elements
+
+  // --- SETUP EVENT LISTENERS ---
+  if (repoSearchInput) {
+    repoSearchInput.addEventListener('input', (event) => {
+      handleSearch(event.target.value);
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);

@@ -4,6 +4,7 @@ export const themeToggleButton = document.getElementById("theme-toggle");
 export const catCallElement = document.getElementById("cat-call");
 export const catAudioElement = document.getElementById("cat-sound");
 export const catMoodIndicator = document.getElementById("cat-mood-indicator");
+export const repoSearchInput = document.getElementById("repo-search-input");
 export const bodyElement = document.body;
 
 export function performPreFlightChecks() {

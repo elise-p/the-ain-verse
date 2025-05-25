@@ -4,7 +4,8 @@ Welcome to the Ain-Verse! This is a dynamic, interactive single-page application
 
 ## ✨ Features
 
-- **Dynamic Repository Listing:** Fetches and displays public GitHub repositories for a specified user (`ainstarc`).
+- **Dynamic Repository Listing:** Fetches and displays public GitHub repositories for the configured user (`ainstarc`).
+- **Repository Filtering/Searching:** Allows users to easily find specific repositories by typing keywords that match repository names, descriptions, or topics.
 - **GitHub API Integration:** Uses the GitHub API to get repository details, including descriptions, languages, stars, forks, and topics.
 - **Light/Dark Theme:** User-selectable theme preference that persists across sessions using `localStorage`. Also respects OS-level color scheme preference.
 - **Interactive "Pspspsps" Cat:**
@@ -54,12 +55,12 @@ No build steps or local server are strictly required for basic viewing, as it's 
 ## 💡 How to Interact
 
 - **Theme Toggle:** Click the 🌙/☀️ button in the header to switch between light and dark themes.
+- **Filter Repositories:** Use the search bar (usually located above the repository list) to type and filter repositories by name, description, or topics.
 - **"Pspspsps" Cat:** Hover over or click the "pspspsps" text in the introductory paragraph to hear cat sounds and see its mood change.
 - **Repository Previews:** If a repository card has a GitHub Pages site, click on the card (not the action icons) to open a preview modal. Click the "×" button or outside the modal content to close.
 
 ## 🔮 Future Enhancements (Ideas)
 
-- Repository filtering/searching.
 - Client-side sorting options for repositories.
 - More advanced animations or visual feedback.
 - Integration with a screenshot API for GitHub Pages previews (if not using iframes).
