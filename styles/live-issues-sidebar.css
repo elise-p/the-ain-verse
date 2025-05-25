@@ -1,0 +1,140 @@
+/* --- Live Issues Sidebar --- */
+
+.live-issues-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0; /* Align to the screen's left edge */
+  width: var(--live-issues-sidebar-width);
+  height: 100vh;
+  background-color: var(--live-issues-sidebar-bg);
+  border-right: 1px solid var(--live-issues-sidebar-border-color);
+  box-shadow: 3px 0 6px var(--live-issues-sidebar-shadow-color);
+  /* Start fully off-screen to the left. JS handles display:none/flex. */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* Ensure it's above other content */
+  box-sizing: border-box;
+  /* The direct children (button, heading, list) will be positioned within this */
+  display: flex; /* Use flex for internal layout; JS will toggle to 'none' when fully hidden */
+  flex-direction: column; /* Stack heading and list vertically */
+}
+
+.live-issues-sidebar.sidebar-open {
+  transform: translateX(0); /* Slide fully into view */
+}
+
+/* Toggle Button (acts as the visible tab) */
+/* External Toggle Button (styled as a tab, positioned fixed) */
+#live-issues-toggle {
+  /* This ID is for the button OUTSIDE the aside */
+  position: fixed; /* Fixed position relative to the viewport */
+  left: 0; /* Attach to the left edge of the screen */
+  top: 50%; /* Vertically center the tab */
+  transform: translateY(-50%); /* Fine-tune vertical centering */
+  width: var(--live-issues-tab-width);
+  min-height: 120px; /* Example height for the tab, adjust as needed */
+  padding: 10px 0; /* Vertical padding for text/icon inside */
+  background-color: var(--live-issues-toggle-bg);
+  color: var(--live-issues-toggle-text-color);
+  border: none;
+  /* Rounded corners on the right side for a tab effect */
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl; /* Makes text vertical */
+  text-orientation: mixed;
+  box-shadow: 2px 0 5px var(--live-issues-toggle-shadow-color);
+  z-index: 1001; /* Ensure it's above the sidebar when closed, or just generally high */
+  line-height: 1.2; /* Adjust for better vertical text appearance */
+}
+
+#live-issues-toggle i {
+  margin-bottom: 8px; /* Space between icon and text in vertical mode */
+  display: block; /* Ensure icon is on its own line if text wraps */
+  transform: rotate(
+    -90deg
+  ); /* Adjust rotation if icon is not oriented correctly */
+}
+
+/* Content within the sidebar (heading and list) */
+/* Ensure content doesn't overlap with the tab area */
+#live-issues-heading {
+  /* Assuming you have a .visually-hidden class for accessibility */
+  /* If not visually hidden, its color should also be themed */
+  /* Content is to the left of the tab, so padding-right avoids the tab */
+  padding: 15px 15px 0 15px; /* T, R, B, L */
+  box-sizing: border-box;
+  color: var(
+    --live-issues-title-text-color
+  ); /* Example if heading is visible */
+  flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+#live-issues-list {
+  list-style: none;
+  margin: 0;
+  /* General padding, with specific right padding to account for the tab's width */
+  padding: 15px;
+  flex-grow: 1; /* Allow the list to take up remaining space */
+  overflow-y: auto; /* Scroll for many issues */
+  box-sizing: border-box;
+}
+
+/* Styles for individual issue items (can be customized) */
+.live-issue-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--live-issues-item-border-color);
+  font-size: 0.9em;
+}
+.live-issue-item:last-child {
+  border-bottom: none;
+}
+.live-issue-title {
+  font-weight: bold;
+  color: var(--live-issues-title-text-color);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 0.2s ease;
+}
+.live-issue-title:hover {
+  text-decoration: underline;
+  /* Consider a hover color variable if different from base link hover */
+}
+.live-issue-repo-name {
+  font-size: 0.8em;
+  color: var(--live-issues-repo-name-text-color);
+  display: block;
+  margin-bottom: 6px;
+}
+.live-issue-labels {
+  margin-top: 5px;
+}
+.live-issue-label {
+  display: inline-block;
+  background-color: var(--live-issues-label-bg-color);
+  color: var(--live-issues-label-text-color);
+  padding: 2px 6px;
+  font-size: 0.75em;
+  border-radius: 3px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.live-issues-sidebar .sidebar-internal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--live-issues-toggle-bg);
+  color: var(--live-issues-toggle-text-color);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 1002;
+}

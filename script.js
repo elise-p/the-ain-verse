@@ -2,6 +2,7 @@ import { performPreFlightChecks, repoSearchInput } from './js/domElements.js';
 import { loadInitialTheme } from './js/themeManager.js';
 import { fetchInitialRepos, handleSearch, setupInteractiveCardListeners } from './js/repoManager.js';
 import { initializeCatSound } from './js/catSoundManager.js';
+import { initializeLiveIssues } from './js/liveIssuesManager.js';
 
 async function initializeApp() {
   // --- PRE-FLIGHT CHECKS ---
@@ -13,6 +14,7 @@ async function initializeApp() {
   loadInitialTheme();
   await fetchInitialRepos(); // Fetch and display initial set of repos
   setupInteractiveCardListeners(); // Setup listeners after repos are on the page
+  initializeLiveIssues(); // Initialize the live issues section
   initializeCatSound(); // Cat sound can be initialized after other UI elements
 
   // --- SETUP EVENT LISTENERS ---

@@ -34,6 +34,20 @@
   --border-radius-small: 4px;
   --border-radius-default: 8px;
   --border-radius-large: 12px;
+
+  --live-issues-sidebar-width: 300px; /* Total width of the sidebar when open */
+  --live-issues-tab-width: 40px; /* Width of the clickable tab */
+  --live-issues-sidebar-bg: var(--card-bg-color);
+  --live-issues-sidebar-border-color: var(--card-border-color);
+  --live-issues-sidebar-shadow-color: rgba(0, 0, 0, 0.1);
+  --live-issues-toggle-bg: var(--link-color);
+  --live-issues-toggle-text-color: var(--button-text-color);
+  --live-issues-toggle-shadow-color: rgba(0, 0, 0, 0.15);
+  --live-issues-item-border-color: var(--card-border-color);
+  --live-issues-title-text-color: var(--text-color);
+  --live-issues-repo-name-text-color: var(--text-secondary-color);
+  --live-issues-label-bg-color: var(--topic-bg-color);
+  --live-issues-label-text-color: var(--topic-text-color);
 }
 
 body.dark-theme {
@@ -59,4 +73,18 @@ body.dark-theme {
   --cat-mood-angry-color: #ef5350;
   --cat-mood-playful-color: #ffa726;
   --cat-mood-alert-color: #64b5f6;
+
+  --live-issues-sidebar-bg: var(--card-bg-color);
+  --live-issues-sidebar-border-color: var(--card-border-color);
+  --live-issues-sidebar-shadow-color: rgba(0, 0, 0, 0.25);
+  --live-issues-toggle-bg: var(--link-color);
+  --live-issues-toggle-text-color: var(
+    --text-color
+  ); /* Using global text color for dark theme toggle for good contrast */
+  --live-issues-toggle-shadow-color: rgba(0, 0, 0, 0.3);
+  --live-issues-item-border-color: var(--card-border-color);
+  --live-issues-title-text-color: var(--text-color);
+  --live-issues-repo-name-text-color: var(--text-secondary-color);
+  --live-issues-label-bg-color: var(--topic-bg-color);
+  --live-issues-label-text-color: var(--topic-text-color);
 }

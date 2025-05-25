@@ -59,11 +59,39 @@ No build steps or local server are strictly required for basic viewing, as it's 
 - **"Pspspsps" Cat:** Hover over or click the "pspspsps" text in the introductory paragraph to hear cat sounds and see its mood change.
 - **Repository Previews:** If a repository card has a GitHub Pages site, click on the card (not the action icons) to open a preview modal. Click the "×" button or outside the modal content to close.
 
-## 🔮 Future Enhancements (Ideas)
+## 📜 Changelog
 
-- Client-side sorting options for repositories.
-- More advanced animations or visual feedback.
-- Integration with a screenshot API for GitHub Pages previews (if not using iframes).
+Keep track of notable changes and new features here. For detailed future plans and bug tracking, please refer to the [GitHub Issues](https://github.com/ainstarc/the-ain-verse/issues).
+
+---
+
+### `v0.1.1` – 2025-05-25
+
+- 🔍 Added **repo search** functionality
+- 🎧 Refreshed **audio interaction**
+- 🎨 Updated overall **UI and layout**
+- 🌦️ Implemented **weather-aware UI behavior**
+- 🧩 Modularized **JavaScript and CSS** structure
+- 🪝 Introduced **live GitHub Issues sidebar** with toggle
+- ✨ Added smooth entry **animations**
+- 📚 Expanded **documentation and inline comments**
+- 🚀 Set up **GitHub Pages deployment workflow**
+- 🧼 Updated `.gitignore` for cleaner version control
+
+
+---
+
+### `v0.1.0` – 2025-05-24
+
+- 🚀 Initial release of **`the-ain-verse`**, your centralized portfolio hub
+- 🗂️ Created responsive **repo cards** with:
+  - Live preview in **modal iframe**
+  - Direct links to **GitHub Pages** and **Issue pages**
+- 🐱 Introduced interactive **cat companion**:
+  - Mood-based **CSS styles**
+  - Expanded **sound effect library**
+- 🎛️ Refactored **theme logic** and standardized **icons**
+- 🧱 Set up base project structure, styles, and layout
 
 ## 📄 License
 

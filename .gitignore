@@ -1,0 +1,28 @@
+# Ignore JetBrains IDE directories and files
+.idea/
+*.iml
+
+# Environment variables
+.env
+
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optional: Vite cache
+.vite/
+
+# Optional: VSCode settings
+.vscode/
