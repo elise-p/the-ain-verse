@@ -1,4 +1,4 @@
-import { themeToggleButton } from './domElements.js'; // bodyElement is used in weatherAnimationManager
+import { themeToggleButton, currentWeatherElement } from './domElements.js'; // bodyElement is used in weatherAnimationManager
 import { THEME_STORAGE_KEY } from './config.js';
 import { createStopAnimationButton, applyWeatherAnimation } from './weatherAnimationManager.js';
 
@@ -89,13 +89,14 @@ function applyTheme(theme) {
   if (themeToggleButton) {
     let initialIcon = isDark ? getMoonPhaseEmoji() : "☀️";
     themeToggleButton.textContent = initialIcon;
+    currentWeatherElement.textContent = initialIcon;
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
         try {
           const weatherCondition = await fetchWeatherData(latitude, longitude);
-          themeToggleButton.textContent = getWeatherEmoji(weatherCondition, !isDark); // !isDark determines if it's daytime context
+          currentWeatherElement.textContent = getWeatherEmoji(weatherCondition, !isDark); // !isDark determines if it's daytime context
           applyWeatherAnimation(weatherCondition); // Apply animation based on fetched weather
         } catch (error) {
           console.error("Error fetching weather data:", error);
@@ -144,4 +145,11 @@ export function loadInitialTheme() {
   } else {
     console.warn("Theme toggle button (#theme-toggle) not found. Theme switching via UI will not be available.");
   }
+}
+
+function loadCurrentTime() {
+  const date = new Date();
+  const currTime = date.getHours();
+  const isDayTime = currTime > 6 && currTime < 18;
+  return isDayTime;
 }

@@ -1,6 +1,7 @@
 export const statusDiv = document.getElementById("status");
 export const repoListDiv = document.getElementById("repoList");
 export const themeToggleButton = document.getElementById("theme-toggle");
+export const currentWeatherElement = document.getElementById("current-weather-icon")
 export const catCallElement = document.getElementById("cat-call");
 export const catAudioElement = document.getElementById("cat-sound");
 export const catMoodIndicator = document.getElementById("cat-mood-indicator");
